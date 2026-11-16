@@ -1,0 +1,25 @@
+/*
+  Curator Dashboard Cards
+*/
+
+.curator-website-card {
+    position: relative;
+}
+
+.edit-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    padding: 7px 14px;
+    background-color: #222;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.edit-button:hover {
+    background-color: #444;
+}

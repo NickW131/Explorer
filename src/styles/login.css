@@ -1,0 +1,140 @@
+/*
+    Curator Login Page
+*/
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2;
+    color: #222;
+}
+
+/* Header */
+.login-header {
+    background-color: #fff;
+    padding: 20px 8%;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.login-logo {
+    color: #111;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Main Login Area */
+.login-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-panel {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.login-panel h1 {
+    margin: 0 0 30px;
+    text-align: center;
+    font-size: 28px;
+    color: #111;
+}
+
+.login-panel > p {
+    text-align: center;
+    color: #555;
+}
+
+/* Login Form */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #222;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.login-form button,
+.login-panel > button {
+    padding: 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-form button:hover,
+.login-panel > button:hover {
+    background-color: #444;
+}
+
+.login-message {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Footer */
+.login-footer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 22px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.login-footer a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Smaller Screens */
+@media (max-width: 600px) {
+    .login-header {
+        padding: 18px 5%;
+    }
+
+    .login-panel {
+        padding: 30px 22px;
+    }
+
+    .login-footer {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}

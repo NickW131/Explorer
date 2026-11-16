@@ -1,0 +1,240 @@
+/* 
+    Home Page 
+*/
+
+.home-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Home Page Header */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 32px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.site-header a {
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.site-header a:first-child {
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 14px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.search-input:focus {
+    outline: 2px solid #777;
+    outline-offset: 1px;
+}
+
+.site-header a:last-child {
+    padding: 10px 16px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Main Content Layout */
+.home-content {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 32px;
+    flex: 1;
+}
+
+/* Tag Sidebar */
+.tag-sidebar {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    height: fit-content;
+}
+
+.tag-sidebar h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.tag-sidebar button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 9px 10px;
+    text-align: left;
+    background-color: #f1f1f1;
+    color: #222;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tag-sidebar button:hover {
+    background-color: #e2e2e2;
+}
+
+.tag-sidebar button.selected {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* Website Listings */
+.website-listings {
+    min-width: 0;
+}
+
+.website-listings h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 28px;
+}
+
+.website-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+/* Website Cards */
+.website-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 340px;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #222;
+    text-decoration: none;
+}
+
+.website-card:hover {
+    border-color: #888;
+}
+
+.website-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    flex-shrink: 0;
+    background-color: #dedede;
+    color: #555;
+    font-size: 14px;
+}
+
+.website-card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 18px;
+}
+
+.website-card-content h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+}
+
+.website-card-content p {
+    margin: 0 0 16px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+.details-prompt {
+    margin-top: auto;
+    color: #222;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* Medium Screens */
+@media (max-width: 1100px) {
+    .website-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-content {
+        grid-template-columns: 190px minmax(0, 1fr);
+        gap: 20px;
+        padding: 24px;
+    }
+}
+
+/* Smaller Screens */
+@media (max-width: 700px) {
+    .site-header {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 18px;
+    }
+
+    .site-header a:first-child {
+        font-size: 20px;
+    }
+
+    .search-input {
+        order: 3;
+        max-width: none;
+        flex-basis: 100%;
+    }
+
+    .home-content {
+        display: flex;
+        flex-direction: column;
+        padding: 18px;
+    }
+
+
+    .tag-sidebar {
+        width: 100%;
+    }
+
+    .tag-sidebar button {
+        display: inline-block;
+        width: auto;
+        margin-right: 6px;
+    }
+
+    .website-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .website-listings h1 {
+        font-size: 24px;
+    }
+}

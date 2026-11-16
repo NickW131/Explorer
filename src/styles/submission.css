@@ -1,0 +1,190 @@
+/* Submission Page */
+.submission-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2;
+    color: #222;
+}
+
+.submission-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+    align-items: start;
+}
+
+.submission-header {
+    background-color: #fff;
+    padding: 20px 8%;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.submission-logo {
+    color: #111;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.submission-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 5%;
+}
+
+.submission-panel {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.submission-panel h1 {
+    margin: 0 0 15px;
+    color: #111;
+    font-size: 28px;
+}
+
+.submission-panel>p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.submission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.submission-form label {
+    margin-top: 10px;
+    color: #222;
+    font-weight: 600;
+}
+
+.submission-form input,
+.submission-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.submission-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.submission-form input:focus,
+.submission-form textarea:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.submission-form button,
+.submission-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.submission-form button:hover,
+.submission-button:hover {
+    background-color: #444;
+}
+
+.submission-footer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 22px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.submission-footer a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.submission-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Submission Info Panel */
+.submission-info {
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.submission-info h2 {
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    color: #111;
+    font-size: 22px;
+}
+
+.submission-info ol {
+    margin: 0;
+    padding-left: 22px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.submission-info li {
+    padding-left: 5px;
+    margin-bottom: 15px;
+}
+
+.submission-info li:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 750px) {
+    .submission-main {
+        padding: 30px 15px;
+    }
+
+    .submission-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .submission-panel {
+        padding: 28px 20px;
+    }
+
+    .submission-info {
+        padding: 25px 20px;
+    }
+}
