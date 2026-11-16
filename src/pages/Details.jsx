@@ -1,4 +1,3 @@
-
 import { Link, useParams } from 'react-router-dom';
 import sampleWebsites from '../data/websites.js';
 import '../styles/details.css';

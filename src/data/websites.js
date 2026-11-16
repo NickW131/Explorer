@@ -1,4 +1,3 @@
-
 const sampleWebsites = [
     {
         id: 1,
@@ -6,7 +5,7 @@ const sampleWebsites = [
         url: "https://developer.mozilla.org",
         description:
             "Documentation and tutorials for web development. Explore references for HTML, CSS, JavaScript, and the web platform.",
-        tags: ["Development", "Learning"]
+        tags: ["Development", "Learning", "Web Development"]
     },
     {
         id: 2,
