@@ -1,155 +1,152 @@
 import { useState } from "react";
-import sampleWebsites from '../data/websites.js';
-import { Link } from "react-router-dom";
-import '../styles/dashboard.css';
-import '../styles/global.css';
+import sampleWebsites from "../data/websites.js";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/dashboard.css";
+import "../styles/global.css";
 
 export default function Dashboard() {
-    const [search, setSearch] = useState("");
-    const [selectedTag, setSelectedTag] = useState("");
+  const [search, setSearch] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+  const navigate = useNavigate();
 
-    // Organize tags into parent categories.
-    const categories = {
-        "Programming": [
-            "Web Development",
-            "Languages",
-            "Software Tools"
-        ],
-        "Education": [
-            "Learning",
-            "Tutorials",
-            "Courses"
-        ],
-        "Reference": [
-            "Information",
-            "Research"
-        ],
-        "Entertainment": [
-            "Media",
-            "Games"
-        ]
-    };
+  function handleLogout() {
+    sessionStorage.removeItem("curatorLoggedIn");
+    navigate("/login", { replace: true });
+  }
 
-    const [expandedCategory, setExpandedCategory] = useState("");
+  // Organize tags into parent categories.
+  const categories = {
+    Programming: ["Web Development", "Languages", "Software Tools"],
+    Education: ["Learning", "Tutorials", "Courses"],
+    Reference: ["Information", "Research"],
+    Entertainment: ["Media", "Games"],
+  };
 
-    // Filter websites by search text and selected tag.
-    const filteredWebsites = sampleWebsites.filter((site) => {
-        const matchesSearch = site.name.toLowerCase().includes(search.toLowerCase())
-            || site.description.toLowerCase().includes(search.toLowerCase());
+  const [expandedCategory, setExpandedCategory] = useState("");
 
-        const matchesTag = selectedTag === "" || site.tags.includes(selectedTag);
+  // Filter websites by search text and selected tag.
+  const filteredWebsites = sampleWebsites.filter((site) => {
+    const matchesSearch =
+      site.name.toLowerCase().includes(search.toLowerCase()) ||
+      site.description.toLowerCase().includes(search.toLowerCase());
 
-        return matchesSearch && matchesTag;
-    });
+    const matchesTag = selectedTag === "" || site.tags.includes(selectedTag);
 
-    // Keep only the first two sentences for the card preview.
-    function getDescriptionPreview(description) {
-        const sentences = description.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+    return matchesSearch && matchesTag;
+  });
 
-        return sentences ? sentences.slice(0, 2).join(" ").trim(): description;
-    }
+  // Keep only the first two sentences for the card preview.
+  function getDescriptionPreview(description) {
+    const sentences = description.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
 
-    return (
-        <div className="home-page">
+    return sentences ? sentences.slice(0, 2).join(" ").trim() : description;
+  }
 
-            {/* Header */}
-            <header className="site-header">
-                <Link to="/dashboard" className="site-logo">
-                    Curator Dashboard
-                </Link>
+  return (
+    <div className="home-page">
+      {/* Header */}
+      <header className="site-header">
+        <Link to="/dashboard" className="site-logo">
+          Curator Dashboard
+        </Link>
 
-                <input
-                    className="search-input"
-                    type="search"
-                    placeholder="Search websites..."
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                />
+        <input
+          className="search-input"
+          type="search"
+          placeholder="Search websites..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
 
-                <Link to="/submissions" className="submit-button">
-                    Submissions
-                </Link>
-            </header>
+        <Link to="/submissions" className="submit-button">
+          Submissions
+        </Link>
 
-            {/* Main Content */}
-            <main className="home-content">
+        <button type="button" className="submit-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </header>
 
-                {/* Tag Sidebar */}
-                <aside className="tag-sidebar">
-                    <h2>Browse by Category</h2>
+      {/* Main Content */}
+      <main className="home-content">
+        {/* Tag Sidebar */}
+        <aside className="tag-sidebar">
+          <h2>Browse by Category</h2>
 
-                    <button className={selectedTag === "" ? "selected" : ""} onClick={() => setSelectedTag("")}>
-                        All Websites
+          <button
+            className={selectedTag === "" ? "selected" : ""}
+            onClick={() => setSelectedTag("")}
+          >
+            All Websites
+          </button>
+
+          {Object.entries(categories).map(([category, tags]) => (
+            <div className="tag-category" key={category}>
+              <button
+                className="category-button"
+                onClick={() =>
+                  setExpandedCategory(
+                    expandedCategory === category ? "" : category,
+                  )
+                }
+              >
+                {category}
+                <span>{expandedCategory === category ? "−" : "+"}</span>
+              </button>
+
+              {expandedCategory === category && (
+                <div className="subcategory-list">
+                  {tags.map((tag) => (
+                    <button
+                      key={tag}
+                      className={selectedTag === tag ? "selected" : ""}
+                      onClick={() => setSelectedTag(tag)}
+                    >
+                      {tag}
                     </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </aside>
 
-                    {Object.entries(categories).map(([category, tags]) => (
-                        <div className="tag-category" key={category}>
-                            <button
-                                className="category-button"
-                                onClick={() => setExpandedCategory(expandedCategory === category ? "" : category)}>
-                                {category}
-                                <span>
-                                    {expandedCategory === category ? "−" : "+"}
-                                </span>
-                            </button>
+        {/* Website Listings */}
+        <section className="website-listings">
+          <h1>Manage Websites</h1>
 
-                            {expandedCategory === category && (
-                                <div className="subcategory-list">
-                                    {tags.map((tag) => (
-                                        <button
-                                            key={tag}
-                                            className={selectedTag === tag ? "selected" : ""}
-                                            onClick={() => setSelectedTag(tag)}>
-                                            {tag}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </aside>
+          <div className="website-grid">
+            {filteredWebsites.length > 0 ? (
+              filteredWebsites.map((site) => (
+                <article
+                  className="website-card curator-website-card"
+                  key={site.id}
+                >
+                  <Link to={`/manage/${site.id}`} className="edit-button">
+                    Edit
+                  </Link>
 
-                {/* Website Listings */}
-                <section className="website-listings">
-                    <h1>Manage Websites</h1>
+                  <div className="website-preview">Website Preview</div>
 
-                    <div className="website-grid">
-                        {filteredWebsites.length > 0 ? (
-                            filteredWebsites.map((site) => (
-                                <article
-                                    className="website-card curator-website-card"
-                                    key={site.id}>
-                                    <Link to={`/manage/${site.id}`}className="edit-button">
-                                        Edit
-                                    </Link>
+                  <div className="website-card-content">
+                    <h2>{site.name}</h2>
 
-                                    <div className="website-preview">
-                                        Website Preview
-                                    </div>
+                    <p>{getDescriptionPreview(site.description)}</p>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <p>No websites found.</p>
+            )}
+          </div>
+        </section>
+      </main>
 
-                                    <div className="website-card-content">
-                                        <h2>{site.name}</h2>
-
-                                        <p>
-                                            {getDescriptionPreview(site.description)}
-                                        </p>
-                                    </div>
-                                </article>
-                            ))
-                        ) : (
-                            <p>No websites found.</p>
-                        )}
-                    </div>
-                </section>
-
-            </main>
-
-            {/* Footer */}
-            <footer className="site-footer">
-                <Link to="/about">About</Link>
-                <Link to="/contacts">Contacts</Link>
-            </footer>
-
-        </div>
-    );
+      {/* Footer */}
+      <footer className="site-footer">
+        <Link to="/about">About</Link>
+        <Link to="/contacts">Contacts</Link>
+      </footer>
+    </div>
+  );
 }
