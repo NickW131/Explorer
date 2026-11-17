@@ -1,150 +1,142 @@
 import { useState } from "react";
-import sampleWebsites from '../data/websites.js';
+import { getWebsites } from "../utils/websiteStorage.js";
 import { Link } from "react-router-dom";
-import '../styles/home.css';
-import '../styles/global.css';
+import "../styles/home.css";
+import "../styles/global.css";
 
 export default function Home() {
-    const [search, setSearch] = useState("");
-    const [selectedTag, setSelectedTag] = useState("");
+  const [search, setSearch] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+  const websites = getWebsites();
 
-    // Collect the available tags from the sample websites.
-    const categories = {
-        "Programming": [
-            "Web Development",
-            "Languages",
-            "Software Tools"
-        ],
-        "Education": [
-            "Learning",
-            "Tutorials",
-            "Courses"
-        ],
-        "Reference": [
-            "Information",
-            "Research"
-        ],
-        "Entertainment": [
-            "Media",
-            "Games"
-        ]
+  // Collect the available tags from the sample websites.
+  const categories = {
+    Programming: ["Web Development", "Languages", "Software Tools"],
+    Education: ["Learning", "Tutorials", "Courses"],
+    Reference: ["Information", "Research"],
+    Entertainment: ["Media", "Games"],
+  };
 
-    };
+  const [expandedCategory, setExpandedCategory] = useState("");
 
-    const [expandedCategory, setExpandedCategory] = useState("");
+  // Filter websites by search text and selected tag.
+  const filteredWebsites = websites.filter((site) => {
+    const matchesSearch =
+      site.name.toLowerCase().includes(search.toLowerCase()) ||
+      site.description.toLowerCase().includes(search.toLowerCase());
 
+    const matchesTag = selectedTag === "" || site.tags.includes(selectedTag);
 
-    // Filter websites by search text and selected tag.
-    const filteredWebsites = sampleWebsites.filter((site) => {
-        const matchesSearch =
-            site.name.toLowerCase().includes(search.toLowerCase()) ||
-            site.description.toLowerCase().includes(search.toLowerCase());
+    return matchesSearch && matchesTag;
+  });
 
-        const matchesTag = selectedTag === "" || site.tags.includes(selectedTag);
+  // Keep only the first two sentences for the homepage preview.
+  function getDescriptionPreview(description) {
+    const sentences = description.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
 
-        return matchesSearch && matchesTag;
-    });
+    return sentences ? sentences.slice(0, 2).join(" ").trim() : description;
+  }
 
-    // Keep only the first two sentences for the homepage preview.
-    function getDescriptionPreview(description) {
-        const sentences = description.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+  return (
+    <div className="home-page">
+      <header className="site-header">
+        <Link to="/" className="site-logo">
+          <span>Website Index </span>
+          <span className="site-logo-icon">⌕</span>
+        </Link>
 
-        return sentences ? sentences.slice(0, 2).join(" ").trim() : description;
-    }
+        <input
+          className="search-input"
+          type="search"
+          placeholder="⌕ Search websites..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
 
-    return (
-        <div className="home-page">
+        <Link to="/submit" className="submit-button">
+          Submit Site
+        </Link>
+      </header>
 
-            <header className="site-header">
-                <Link to="/" className="site-logo">
-                    <span>Website Index </span>
-                    <span className="site-logo-icon">⌕</span>
-                </Link>
+      {/*Main Content*/}
+      <main className="home-content">
+        {/*Tag Sidebar*/}
+        <aside className="tag-sidebar">
+          <h2>Browse by Category</h2>
 
-                <input
-                    className="search-input"
-                    type="search"
-                    placeholder="⌕ Search websites..."
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                />
+          <button
+            className={selectedTag === "" ? "selected" : ""}
+            onClick={() => setSelectedTag("")}
+          >
+            All Websites
+          </button>
 
-                <Link to="/submit" className="submit-button">
-                    Submit Site
-                </Link>
-            </header>
+          {Object.entries(categories).map(([category, tags]) => (
+            <div className="tag-category" key={category}>
+              <button
+                className="category-button"
+                onClick={() =>
+                  setExpandedCategory(
+                    expandedCategory === category ? "" : category,
+                  )
+                }
+              >
+                {category}
+                <span>{expandedCategory === category ? "−" : "+"}</span>
+              </button>
 
-            {/*Main Content*/}
-            <main className="home-content">
-
-                {/*Tag Sidebar*/}
-                <aside className="tag-sidebar">
-                    <h2>Browse by Category</h2>
-
-                    <button className={selectedTag === "" ? "selected" : ""} onClick={() => setSelectedTag("")}>
-                        All Websites
+              {expandedCategory === category && (
+                <div className="subcategory-list">
+                  {tags.map((tag) => (
+                    <button
+                      key={tag}
+                      className={selectedTag === tag ? "selected" : ""}
+                      onClick={() => setSelectedTag(tag)}
+                    >
+                      {tag}
                     </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </aside>
+        {/*Website Listings*/}
+        <section className="website-listings">
+          <h1>Explore Websites</h1>
 
-                    {Object.entries(categories).map(([category, tags]) => (
-                        <div className="tag-category" key={category}>
-                            <button
-                                className="category-button"
-                                onClick={() => setExpandedCategory(expandedCategory === category ? "" : category)}>
-                                {category}
-                                <span>{expandedCategory === category ? "−" : "+"}</span>
-                            </button>
+          <div className="website-grid">
+            {filteredWebsites.length > 0 ? (
+              filteredWebsites.map((site) => (
+                <Link
+                  to={`/websites/${site.id}`}
+                  className="website-card"
+                  key={site.id}
+                >
+                  <div className="website-preview">Website Preview</div>
 
-                            {expandedCategory === category && (
-                                <div className="subcategory-list">
-                                    {tags.map((tag) => (
-                                        <button key={tag} className={selectedTag === tag ? "selected" : ""} onClick={() => setSelectedTag(tag)}>
-                                            {tag}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </aside>
-                {/*Website Listings*/}
-                <section className="website-listings">
-                    <h1>Explore Websites</h1>
+                  <div className="website-card-content">
+                    <h2>{site.name}</h2>
 
-                    <div className="website-grid">
-                        {filteredWebsites.length > 0 ? (
-                            filteredWebsites.map((site) => (
-                                <Link to={`/websites/${site.id}`} className="website-card" key={site.id}>
-                                    <div className="website-preview">
-                                        Website Preview
-                                    </div>
+                    <p>{getDescriptionPreview(site.description)}</p>
 
-                                    <div className="website-card-content">
-                                        <h2>{site.name}</h2>
+                    <span className="details-prompt">Details →</span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p>No websites found.</p>
+            )}
+          </div>
+        </section>
+      </main>
 
-                                        <p>
-                                            {getDescriptionPreview(site.description)}
-                                        </p>
-
-                                        <span className="details-prompt">
-                                            Details →
-                                        </span>
-                                    </div>
-                                </Link>
-                            ))
-                        ) : (<p>No websites found.</p>)
-                        }
-                    </div>
-                </section>
-
-            </main>
-
-            {/* Footer */}
-            <footer className="site-footer">
-                <Link to="/about">About</Link>
-                <Link to="/login">Curators Login</Link>
-                <Link to="/contacts">Contacts</Link>
-            </footer>
-
-        </div>
-    );
+      {/* Footer */}
+      <footer className="site-footer">
+        <Link to="/about">About</Link>
+        <Link to="/login">Curators Login</Link>
+        <Link to="/contacts">Contacts</Link>
+      </footer>
+    </div>
+  );
 }

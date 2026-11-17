@@ -31,6 +31,10 @@ export default function Login() {
       </header>
 
       <main className="login-main">
+        <Link to="/" className="login-back-button">
+          ← Back to Home
+        </Link>
+
         <section className="login-panel">
           <h1>Curator Login</h1>
 

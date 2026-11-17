@@ -1,5 +1,5 @@
 import { useState } from "react";
-import sampleWebsites from "../data/websites.js";
+import { getWebsites } from "../utils/websiteStorage.js";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
 import "../styles/global.css";
@@ -8,6 +8,7 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const navigate = useNavigate();
+  const websites = getWebsites();
 
   function handleLogout() {
     sessionStorage.removeItem("curatorLoggedIn");
@@ -25,7 +26,7 @@ export default function Dashboard() {
   const [expandedCategory, setExpandedCategory] = useState("");
 
   // Filter websites by search text and selected tag.
-  const filteredWebsites = sampleWebsites.filter((site) => {
+  const filteredWebsites = websites.filter((site) => {
     const matchesSearch =
       site.name.toLowerCase().includes(search.toLowerCase()) ||
       site.description.toLowerCase().includes(search.toLowerCase());
