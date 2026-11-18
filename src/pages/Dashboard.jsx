@@ -114,7 +114,13 @@ export default function Dashboard() {
 
         {/* Website Listings */}
         <section className="website-listings">
-          <h1>Manage Websites</h1>
+          <div className="dashboard-heading">
+            <h1>Manage Websites</h1>
+
+            <Link to="/manage/new" className="dashboard-add-button">
+              + Add Website
+            </Link>
+          </div>
 
           <div className="website-grid">
             {filteredWebsites.length > 0 ? (

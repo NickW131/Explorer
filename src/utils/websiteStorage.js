@@ -9,7 +9,15 @@ export function getWebsites() {
     localStorage.getItem("website-index-deleted") || "[]",
   );
 
-  return sampleWebsites
-    .filter((site) => !deleted.includes(site.id))
-    .map((site) => overrides[site.id] || site);
+  const originalWebsites = sampleWebsites.map(
+    (site) => overrides[site.id] || site,
+  );
+
+  const newWebsites = Object.values(overrides).filter(
+    (site) => !sampleWebsites.some((original) => original.id === site.id),
+  );
+
+  return [...originalWebsites, ...newWebsites].filter(
+    (site) => !deleted.includes(site.id),
+  );
 }
